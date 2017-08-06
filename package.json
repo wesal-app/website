@@ -1,0 +1,19 @@
+{
+  "name": "wesal",
+  "version": "1.0.0",
+  "description": "communication app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.5",
+    "nodemailer": "^4.0.1"
+  }
+}
