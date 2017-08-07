@@ -10,9 +10,35 @@
   
   <body>
 
-    <h1>
-    sapijdasjd'aijs
-    </h1>
+    <div class="container">
+      <div class="row">
+        <img src="img/wesal%20logo.jpg" class="center-block imge" style="width:200px margin-top:-10px">
+      </div>
+      
+      <div class="row">
+        <h1 class="text-center">أهلاً.. مرحبًا بك في وصال</h1>
+      </div>
+      
+        <h2 class="text-center ">
+            ما هي وصال؟
+        </h2>
+      <p class="text-center">
+        وصال عبارة عن خدمة تتيح لك ارسال و استقبال الرسائل عن طريق تطبيقات التواصل الإجتماعي<br>
+        
+        مثل الواتساب والتيليجرام أو عن طريق الرسائل النصية القصيرة sms ، و البريد الإلكتروني.
+      </p>
+      <div class="login_wrapper">
+        
+        <form class="form " action="/process"  method="post">
+          <h1 class="text-center">{{title}}</h1>
+          <label>Email:</label>
+          <input type="text" class="form-control" id="usr" name='email' placeholder="Email">
+          <br>
+          <button id="form_table" class="btn btn-primary center-block">Subscribe!</button> 
+        </form>
+        
+      </div>
+    </div>
     
   </body>
 </html>
