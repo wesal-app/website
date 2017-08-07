@@ -3,10 +3,6 @@
     {{>head}}
     
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <meta name="HandheldFriendly" content="true" />
-
-    <link rel="stylesheet" href="css/stylesheet.css">
     <link href="https://fonts.googleapis.com/css?family=Harmattan" rel="stylesheet">
     
     <title>Wesal Website</title>
@@ -32,21 +28,18 @@
         مثل الواتساب والتيليجرام أو عن طريق الرسائل النصية القصيرة sms ، و البريد الإلكتروني.
       </p>
       <div class="login_wrapper">
-      <form class="form " action="/process"  method="post">
-        <h1 class="text-center">{{title}}</h1>
-      <label for="usr">Email:</label>
-      <input type="text" class="form-control" id="usr" name='email' placeholder="Email">
-        <br>
-                <button id="form_table" class="btn btn-primary center-block">Subscribe!</button> 
-      <div class="col-md-12 text-center"> 
-
-      </div>
         
-      </form>
+        <form class="form " action="/process"  method="post">
+          <h1 class="text-center">{{title}}</h1>
+          <label>Email:</label>
+          <input type="text" class="form-control" id="usr" name='email' placeholder="Email">
+          <br>
+          <button id="form_table" class="btn btn-primary center-block">Subscribe!</button> 
+        </form>
+        
       </div>
     </div>
-    <script>
-    </script>
+    
   </body>
 </html>
 
@@ -67,8 +60,6 @@
   html, body {
      margin:0; /* remove default margin */
      padding:0; /* remove default padding */
-     width:100%; /* take full browser width */
-     height:100%; /* take full browser height*/
 }
 
 </style>
