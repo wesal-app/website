@@ -47,19 +47,6 @@
   </body>
 </html>
 
-<script>
-function updateWidth(){
-    viewport = document.querySelector("meta[name=viewport]");
-    if (window.orientation == 90 || window.orientation == -90) {
-        viewport.setAttribute('content', 'width=1401, initial-scale=0.34, maximum-scale=1.0, user-scalable=1');
-    }
-    else {
-        viewport.setAttribute('content', 'width=640, initial-scale=0.47, maximum-scale=1.0, user-scalable=1');
-    }
-} 
-
-
-</script>
 <style>
   html { 
     zoom: .8; 
@@ -75,7 +62,6 @@ function updateWidth(){
     margin: 0px auto;
     margin-top: 5%;
     max-width: 350px;
-    position: relative
 }
 
 </style>
