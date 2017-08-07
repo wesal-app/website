@@ -2,7 +2,7 @@
   <head>
     {{>head}}
     
-    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <meta name="HandheldFriendly" content="true" />
 
@@ -13,20 +13,26 @@
   </head>
   
   <body>
-          <img src="img/wesal%20logo.jpg" class="img-responsive center-block" style="width:280px margin-top:-10px">
+
     <div class="container">
+      <div class="row">
+        <img src="img/wesal%20logo.jpg" class="center-block imge" style="width:200px margin-top:-10px">
+      </div>
       
-      <h1 class="text-center">أهلاً.. مرحبًا بك في وصال</h1>
-      <h2 class="text-center ">
+      <div class="row">
+        <h1 class="text-center">أهلاً.. مرحبًا بك في وصال</h1>
+      </div>
+      
+        <h2 class="text-center ">
             ما هي وصال؟
-      </h2>
+        </h2>
       <p class="text-center">
         وصال عبارة عن خدمة تتيح لك ارسال و استقبال الرسائل عن طريق تطبيقات التواصل الإجتماعي<br>
         
         مثل الواتساب والتيليجرام أو عن طريق الرسائل النصية القصيرة sms ، و البريد الإلكتروني.
       </p>
-      
-      <form class="form" action="/process"  method="post">
+      <div class="login_wrapper">
+      <form class="form " action="/process"  method="post">
         <h1 class="text-center">{{title}}</h1>
       <label for="usr">Email:</label>
       <input type="text" class="form-control" id="usr" name='email' placeholder="Email">
@@ -37,6 +43,7 @@
       </div>
         
       </form>
+      </div>
     </div>
     <script>
     </script>
@@ -47,6 +54,15 @@
   * {
     font-family:Harmattan;
   }
-
+  .imge{
+    width:200px;
+  }
+  .login_wrapper {
+    right: 0px;
+    margin: 0px auto;
+    margin-top: 5%;
+    max-width: 350px;
+    position: relative
+}
 
 </style>
