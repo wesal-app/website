@@ -1,14 +1,17 @@
   var express = require('express'); 
   //express is framework on top of nodeJS
+
   var app = express();  
   // initilize express
 
-  var session = require('express-session');
   var bodyParser = require('body-parser');
+  // to get the data from the index
 
-  app.use(express.static(__dirname+'/public'));//to give the website the ability to visit public foldse
+  app.use(express.static(__dirname+'/public'));
+  //to give the website the ability to visit public folders
 
-  var nodemailer = require('nodemailer'); // Nodemailer for sending emails for the users
+  var nodemailer = require('nodemailer');
+  // Nodemailer for sending emails for the users
 
   var transporter = nodemailer.createTransport({ 
     // Nodemailer initiliztion
@@ -19,27 +22,35 @@
     }
   });
 
+  var session = require('express-session');
+  // express session package 
+
   app.use(session({
     secret: "tHiSiSasEcRetStr",
     resave: true,
-    saveUninitialized: true }));
+    saveUninitialized: true }
+  ));
+  // session initilazion 
 
   app.use(bodyParser.json()); 
   app.use(bodyParser.urlencoded({ extended: true }));  
+  //body parser init.
 
-  //Templateing setup
   var handlebars = require('express-handlebars').create();
   app.engine('handlebars',handlebars.engine);
   app.set('view engine','handlebars');
-
-  // Routing
+  //Templateing setup
+  
+  
   app.get('/',(req,res)=>{ 
     res.render('layouts/main');
   });
-
+  // Routing
+  
   app.post('/process',(req,res)=>{
     
     console.log('email',req.body.email);
+    
     let mailOptions = {
     from: '"Wesal 👻"', 
     to: req.body.email, 
