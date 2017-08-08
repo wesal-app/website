@@ -21,6 +21,11 @@
       pass: 'team2123456'
     }
   });
+  var mongo = require('mongodb').MongoClient;
+  var url = 'mongodb://dina:123456@ds151060.mlab.com:51060/wesal';
+  
+  
+  
 
   var session = require('express-session');
   // express session package 
@@ -50,7 +55,7 @@
   app.post('/process',(req,res)=>{
     
     console.log('email',req.body.email);
-    
+	    var obj ={email: req.body.email };
     let mailOptions = {
     from: '"Wesal 👻"', 
     to: req.body.email, 
@@ -68,7 +73,16 @@
     }
     console.log('Message %s sent: %s', info.messageId, info.response);
     });
-    
+  mongo.connect(url,(err,db)=>{
+	  if (err){console.log(err)};
+		db.collection('wesal').insertOne(obj,(err,result)=>{
+			if(err){return console.log(err);}
+			console.log(JSON.stringify(obj) + 'is inserted');
+			db.close();
+		});
+		
+  });
+  
     res.render('layouts/main', { title: 'Done'});
     
   });
