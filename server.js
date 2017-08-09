@@ -21,12 +21,10 @@
       pass: 'team2123456'
     }
   });
+
   var mongo = require('mongodb').MongoClient;
   var url = 'mongodb://dina:123456@ds151060.mlab.com:51060/wesal';
   
-  
-  
-
   var session = require('express-session');
   // express session package 
 
@@ -50,9 +48,11 @@
   app.get('/',(req,res)=>{ 
     res.render('layouts/main');
   });
+
   app.get('/policy',(req,res)=>{ 
     res.sendFile('views/policy.html', {root: __dirname })
   });
+
   app.post('/login',(req,res)=>{
   var user = { user:req.body.user,
                pass:req.body.pass  }
@@ -71,7 +71,15 @@
                email:req.body.regEmail,
                pass: req.body.pass
              }
-  
+  let mailOptions = {
+    from: '"Wesal 👻"', 
+    to: req.body.regEmail, 
+    subject: 'Hello ✔', // Subject line
+    text: 'Hello.. \n' + 'Welcome to Wesal' + req.body.firstName +
+          ' We are happy to join us, ' +
+          'Tell us that you are facing a problem.'+
+          ' We wish you a happy day. \n\n' + 'Wesal group'
+    };
   mongo.connect(url,(err,db)=>{
       console.log('connected')
 	  if (err){console.log(err)};
