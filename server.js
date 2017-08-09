@@ -50,6 +50,41 @@
   app.get('/',(req,res)=>{ 
     res.render('layouts/main');
   });
+  app.get('/policy',(req,res)=>{ 
+    res.sendFile('views/policy.html', {root: __dirname })
+  });
+  app.post('/login',(req,res)=>{
+  var user = { user:req.body.user,
+               pass:req.body.pass  }
+  mongo.connect(url,(err,db)=>{
+	  if (err){console.log(err)};
+	//	db.collection('wesal').insertOne(obj,(err,result)=>{
+			if(err){return console.log(err);}
+			console.log(JSON.stringify(obj) + 'is inserted');
+			db.close();
+		});
+  });
+  
+  app.post('/reg',(req,res)=>{
+  var user = { firstName:req.body.firstName,
+               secondName:req.body.secondName,
+               email:req.body.regEmail,
+               pass: req.body.pass
+             }
+  
+  mongo.connect(url,(err,db)=>{
+      console.log('connected')
+	  if (err){console.log(err)};
+      db.collection('wesal').insertOne(user,(err,result)=>{
+			if(err){return console.log(err);}
+			console.log(JSON.stringify(user) + 'is inserted');
+			db.close();
+		});
+    });
+    res.render('layouts/main');
+  });
+  
+  
   // Routing
   
   app.post('/process',(req,res)=>{
