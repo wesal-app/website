@@ -3,158 +3,68 @@
 
   var app = express();  
   // initilize express
-
-  var bodyParser = require('body-parser');
-  // to get the data from the index
+  var routers = require('./routes/router');
   
   var session = require('express-session');
+  
+  //var User = require('./models/user');
 
   app.use(express.static(__dirname+'/public'));
   //to give the website the ability to visit public folders
 
-  var nodemailer = require('nodemailer');
-  // Nodemailer for sending emails for the users
-
-  var transporter = nodemailer.createTransport({ 
-    // Nodemailer initiliztion
-    service: 'gmail',
-    auth: { //Your Email info
-      user: 'teamtwocloud@gmail.com', 
-      pass: 'team2123456'
-    }
-  });
   
+  var MongoStore = require('connect-mongo')(session);
+
+
+  var mongoose = require('mongoose');
   var passport = require('passport');
   var LocalStrategy = require('passport-local').Strategy;
+  var bodyParser = require('body-parser');
 
-  //app.use(express.session({ secret: 'SECRET' }));
-  app.use(passport.initialize());
-  app.use(passport.session());
-  app.use(session({secret: 'keyboard cat'}));
-  var CryptoJS = require("crypto-js");
-
-  var mongo = require('mongodb').MongoClient;
-  var url = 'mongodb://dina:123456@ds151060.mlab.com:51060/wesal';
+  //connect to MongoDB
+  mongoose.Promise = global.Promise;
+  mongoose.connect('mongodb://dina:123456@ds151060.mlab.com:51060/wesal');
+  var db = mongoose.connection;
   
-  var session = require('express-session');
-  // express session package 
+  //handle mongo error
+  db.on('error', console.error.bind(console, 'connection error:'));
+  db.once('open', function () {
+    console.log("we're connected!");
+  });
 
   app.use(session({
-    secret: "tHiSiSasEcRetStr",
+    secret: 'work hard',
     resave: true,
-    saveUninitialized: true }
-  ));
-  // session initilazion 
+    saveUninitialized: false,
+    store: new MongoStore({
+      mongooseConnection: db
+    })
+  }));
+  var User = require('./models/user');
 
-  app.use(bodyParser.json()); 
-  app.use(bodyParser.urlencoded({ extended: true }));  
-  //body parser init.
+  passport.use(User.createStrategy());
+  passport.serializeUser(User.serializeUser());
+  passport.deserializeUser(User.deserializeUser());
+    app.use(passport.initialize());
+
 
   var handlebars = require('express-handlebars').create();
   app.engine('handlebars',handlebars.engine);
   app.set('view engine','handlebars');
   //Templateing setup
-  
-  
-  app.get('/',(req,res)=>{ 
-    res.render('layouts/main');
-  });
 
-  app.get('/policy',(req,res)=>{ 
-    res.sendFile('views/policy.html', {root: __dirname })
-  });
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
 
-  app.post('/login',(req,res)=>{
-  var user = { user:req.body.user,
-               pass:req.body.pass  }
-  mongo.connect(url,(err,db)=>{
-	  if (err){console.log(err)};
-	//	db.collection('wesal').insertOne(obj,(err,result)=>{
-			if(err){return console.log(err);}
-			console.log(JSON.stringify(obj) + 'is inserted');
-			db.close();
-		});
-  });
-  
-  app.post('/reg',(req,res)=>{
-  var hash = CryptoJS.SHA3(req.body.pass);
-  
-  var user = { firstName:req.body.firstName,
-               secondName:req.body.secondName,
-               email:req.body.regEmail,
-               pass: JSON.stringify(hash)
-             }
-  console.log(user.pass);
-  
-  let mailOptions = {
-    from: '"Wesal 👻"', 
-    to: req.body.regEmail, 
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello.. \n' + 'Welcome to Wesal' + req.body.firstName +
-          ' We are happy to join us, ' +
-          'Tell us that you are facing a problem.'+
-          ' We wish you a happy day. \n\n' + 'Wesal group'
-    };
-    
-    transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        return console.log(error);
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
-    });
-    
-    mongo.connect(url,(err,db)=>{
-      console.log('connected')
-	  if (err){console.log(err)};
-      db.collection('wesal').insertOne(user,(err,result)=>{
-			if(err){return console.log(err);}
-			console.log(JSON.stringify(user) + 'is inserted');
-			db.close();
-		});
-    });
-    res.render('layouts/main');
-  });
-  
-  
-  // Routing
-  
-  app.post('/process',(req,res)=>{
-    
-    console.log('email',req.body.email);
-	    var obj ={email: req.body.email };
-    let mailOptions = {
-    from: '"Wesal 👻"', 
-    to: req.body.email, 
-    subject: 'Hello ✔', // Subject line
-    text: 'Hello.. \n' + 'Welcome to Wesal' +
-          ' We are happy to join us, ' +
-          'Tell us that you are facing a problem.'+
-          ' We wish you a happy day. \n\n' + 'Wesal group'
-    };
-
-    // send mail with defined transport object
-    transporter.sendMail(mailOptions, (error, info) => {
-    if (error) {
-        return console.log(error);
-    }
-    console.log('Message %s sent: %s', info.messageId, info.response);
-    });
-  mongo.connect(url,(err,db)=>{
-	  if (err){console.log(err)};
-		db.collection('wesal').insertOne(obj,(err,result)=>{
-			if(err){return console.log(err);}
-			console.log(JSON.stringify(obj) + 'is inserted');
-			db.close();
-		});
-		
-  });
-  
-    res.render('layouts/main', { title: 'Done'});
-    
-  });
+  app.use('/', routers);
+  app.use('/policy', routers);
+  app.use('/reg',routers);
+  app.use('/login',routers);
+  app.use('/control',routers)
 
   //Port Setup
   app.listen(process.env.PORT || 3000);
+
   console.log('The magic happens on port 3000');
 
   // 'process.env.PORT' for heroku deployment purposes 
