@@ -6,6 +6,8 @@
 
   var bodyParser = require('body-parser');
   // to get the data from the index
+  
+  var session = require('express-session');
 
   app.use(express.static(__dirname+'/public'));
   //to give the website the ability to visit public folders
@@ -21,6 +23,15 @@
       pass: 'team2123456'
     }
   });
+  
+  var passport = require('passport');
+  var LocalStrategy = require('passport-local').Strategy;
+
+  //app.use(express.session({ secret: 'SECRET' }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  app.use(session({secret: 'keyboard cat'}));
+  var CryptoJS = require("crypto-js");
 
   var mongo = require('mongodb').MongoClient;
   var url = 'mongodb://dina:123456@ds151060.mlab.com:51060/wesal';
@@ -66,11 +77,15 @@
   });
   
   app.post('/reg',(req,res)=>{
+  var hash = CryptoJS.SHA3(req.body.pass);
+  
   var user = { firstName:req.body.firstName,
                secondName:req.body.secondName,
                email:req.body.regEmail,
-               pass: req.body.pass
+               pass: JSON.stringify(hash)
              }
+  console.log(user.pass);
+  
   let mailOptions = {
     from: '"Wesal 👻"', 
     to: req.body.regEmail, 
@@ -80,7 +95,15 @@
           'Tell us that you are facing a problem.'+
           ' We wish you a happy day. \n\n' + 'Wesal group'
     };
-  mongo.connect(url,(err,db)=>{
+    
+    transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+        return console.log(error);
+    }
+    console.log('Message %s sent: %s', info.messageId, info.response);
+    });
+    
+    mongo.connect(url,(err,db)=>{
       console.log('connected')
 	  if (err){console.log(err)};
       db.collection('wesal').insertOne(user,(err,result)=>{
@@ -132,4 +155,6 @@
 
   //Port Setup
   app.listen(process.env.PORT || 3000);
+  console.log('The magic happens on port 3000');
+
   // 'process.env.PORT' for heroku deployment purposes 
