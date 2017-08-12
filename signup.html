@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+
+<html  dir="rtl">
+<head>
+		<meta charset="UTF-8">
+		<title>وصـال</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<!--[if lte IE 8]><script src="js/html5shiv.js"></script><![endif]-->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/skel.min.js"></script>
+		<script src="js/skel-layers.min.js"></script>
+		<script src="js/init.js"></script>
+		<noscript>
+			<link rel="stylesheet" href="css/skel.css" />
+			<link rel="stylesheet" href="css/style.css" />
+			<link rel="stylesheet" href="css/style-xlarge.css" />
+		</noscript>
+	</head>
+	<body class="landing">
+
+		<!-- Header -->
+		
+			<header id="header">
+	<h1><a href="index.html">الرئيسية</a></h1>
+
+				<nav id="nav">
+					<ul>
+                        
+						<li><a  class="page-scroll"href="index.html#one">   ماهي وصال؟</a></li>
+						<li><a class="page-scroll" href="contact.html">....تواصل معنا</a></li>
+					    <li><a href="signup.html" class="button special">التسجيل</a></li>
+                        <li><a href="signin.html" class="button special">تسجيل الدخول</a></li>
+					</ul>
+				</nav>
+			</header>
+		<!-- Three -->
+        <div>
+			<section id="three" class="wrapper style3 special">
+				<div class="container">
+					<header class="major">
+								  <img class="center-block imge" src="33.png" alt="logo" height="200" width="200" margin-top="-10px">
+
+						<h2>تسجيل جديد </h2>
+						
+					</header>
+				</div>
+				<div class="container 50%">
+					<form action="#" method="post">
+						<div class="row uniform">
+							<div class="6u 12u$(small)">
+								<input type="text" name="neme" placeholder="الاسم الأول">	
+                                <br/>
+                                <input  id="paw" type="password" name="neme" placeholder="كلمةالمررور">
+                                
+							</div>
+                            
+							<div class="6u$ 12u$(small)">
+								<input type="text" name="neme" placeholder="الاسم الثاني">
+                             <br/>
+								<input type="email" name="neme" placeholder="البريد الإلكتروني">
+                             <br/>   
+                            <div id="div"  >    
+                                 <input  type="checkbox" name="vehicle" value="accept" checked><a href="privacy.html" >الموافقة على بنود الخدمة</a>
+                          <a href="policy.html">وسياسة الخصوصية</a>
+                             </div>	
+							</div>
+                            
+                            
+						 
+                              
+				         
+							
+							<div class="12u$">
+								<ul class="actions">
+									<li><input  type="submit" value="تسجيل ">
+                                        <input  type="reset" value="مسح "></li>
+								</ul>
+							</div>
+						</div>
+					</form>
+				</div>
+			</section>
+            
+   
+			
+				<div class="col-md-4">
+			<div class="aro-pswd_info">
+				<div id="pswd_info">
+					<h4>:يجب أن تحتوي كلمة المرور على</h4>
+					<ul>
+						<li id="letter" class="invalid">على الأقل <strong>حرف واحد</strong></li>
+						<li id="capital" class="invalid">على الأقل <strong>حرف كبير</strong></li>
+						<li id="number" class="invalid">على الأقل <strong>رقم</strong></li>
+						<li id="length" class="invalid">يجب أن لا تقل عن <strong>ثمانية خانات</strong></li>
+						<li id="space" class="invalid">استخدم<strong> رمز [~,!,@,#,$,%,^,&,*,-,=,.,;,']</strong></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+  
+    </div>
+    
+    <script type="text/javascript">
+$(document).ready(function(){
+
+	$('input[type=password]').keyup(function() {
+		var pswd = $(this).val();
+		
+		//validate the length
+		if ( pswd.length < 8 ) {
+			$('#length').removeClass('valid').addClass('invalid');
+		} else {
+			$('#length').removeClass('invalid').addClass('valid');
+		}
+		
+		//validate letter
+		if ( pswd.match(/[A-z]/) ) {
+			$('#letter').removeClass('invalid').addClass('valid');
+		} else {
+			$('#letter').removeClass('valid').addClass('invalid');
+		}
+
+		//validate capital letter
+		if ( pswd.match(/[A-Z]/) ) {
+			$('#capital').removeClass('invalid').addClass('valid');
+		} else {
+			$('#capital').removeClass('valid').addClass('invalid');
+		}
+
+		//validate number
+		if ( pswd.match(/\d/) ) {
+			$('#number').removeClass('invalid').addClass('valid');
+		} else {
+			$('#number').removeClass('valid').addClass('invalid');
+		}
+		
+		//validate space
+		if ( pswd.match(/[^a-zA-Z0-9\-\/]/) ) {
+			$('#space').removeClass('invalid').addClass('valid');
+		} else {
+			$('#space').removeClass('valid').addClass('invalid');
+		}
+		
+	}).focus(function() {
+		$('#pswd_info').show();
+	}).blur(function() {
+		$('#pswd_info').hide();
+	});
+	
+});
+</script>
+    <footer id="footer">
+	
+					
+					<div class="row">
+						<div class="8u 12u$(medium)">
+							<ul class="copyright">
+								<li>&copy; الحقوق محفوظة لوصــال 2017</li>
+								
+							</ul>
+						</div>
+						<div class="4u$ 12u$(medium)">
+							<ul class="icons">
+								<li>
+									<a class="icon rounded fa-facebook"><span class="label">Facebook</span></a>
+								</li>
+								<li>
+									<a class="icon rounded fa-twitter"><span class="label">Twitter</span></a>
+								</li>
+								<li>
+									<a class="icon rounded fa-google-plus"><span class="label">Google+</span></a>
+								</li>
+								<li>
+									<a class="icon rounded fa-linkedin"><span class="label">LinkedIn</span></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				
+			</footer>
+			
+
+        
+    </body>
+</html>
